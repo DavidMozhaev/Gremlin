@@ -27,27 +27,81 @@ body {
   line-height: 1.6;
   min-height: 100vh;
   position: relative;
+  cursor: url("assets/cursor.png") 19 7, auto;
 }
 
-/* ---- background wire pattern ---- */
-.wires {
+/* ---- background image ---- */
+.bg-stage {
   position: fixed;
   inset: 0;
   z-index: 0;
   pointer-events: none;
-  background-color: var(--bg);
-  background-image:
-    repeating-linear-gradient(115deg, rgba(168, 230, 0, 0.05) 0px, rgba(168, 230, 0, 0.05) 1px, transparent 1px, transparent 140px),
-    repeating-linear-gradient(25deg, rgba(181, 98, 47, 0.05) 0px, rgba(181, 98, 47, 0.05) 1px, transparent 1px, transparent 180px),
-    repeating-linear-gradient(90deg, rgba(255, 255, 255, 0.015) 0px, rgba(255, 255, 255, 0.015) 1px, transparent 1px, transparent 60px);
+  overflow: hidden;
+  background: var(--bg);
 }
 
-.wires::after {
+.bg-image {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: center;
+  display: block;
+}
+
+.bg-stage::after {
   content: "";
   position: absolute;
   inset: 0;
   background: radial-gradient(ellipse at 50% 0%, rgba(168, 230, 0, 0.05), transparent 55%),
-    radial-gradient(ellipse at 100% 100%, rgba(181, 98, 47, 0.06), transparent 60%);
+    radial-gradient(ellipse at 100% 100%, rgba(181, 98, 47, 0.06), transparent 60%),
+    radial-gradient(ellipse at 50% 50%, transparent 40%, rgba(0, 0, 0, 0.35) 100%);
+}
+
+.lights-layer,
+.dust-layer {
+  position: absolute;
+  inset: 0;
+  overflow: hidden;
+}
+
+/* ---- blinking lamps ---- */
+.lamp {
+  position: absolute;
+  transform: translate(-50%, -50%);
+  border-radius: 50%;
+  background: radial-gradient(circle, #eaffb0 0%, #a8e600 35%, rgba(168, 230, 0, 0.5) 60%, transparent 75%);
+  box-shadow: 0 0 6px 2px rgba(168, 230, 0, 0.6);
+  animation-name: lamp-breathe;
+  animation-iteration-count: infinite;
+  animation-timing-function: ease-in-out;
+  will-change: opacity, filter;
+}
+
+@keyframes lamp-breathe {
+  0% { opacity: var(--lamp-min, 0.35); filter: brightness(0.8); }
+  50% { opacity: var(--lamp-max, 1); filter: brightness(1.3); }
+  100% { opacity: var(--lamp-min, 0.35); filter: brightness(0.8); }
+}
+
+/* ---- drifting dust ---- */
+.dust {
+  position: absolute;
+  border-radius: 50%;
+  background: rgba(216, 217, 210, 0.5);
+  animation-name: dust-drift;
+  animation-iteration-count: infinite;
+  animation-timing-function: ease-in-out;
+  will-change: transform, opacity;
+}
+
+@keyframes dust-drift {
+  0% { transform: translate(0, 0); opacity: 0; }
+  10% { opacity: var(--dust-op, 0.35); }
+  50% { transform: translate(var(--dust-dx, 12px), var(--dust-dy, -18px)); opacity: var(--dust-op, 0.35); }
+  90% { opacity: var(--dust-op, 0.35); }
+  100% { transform: translate(var(--dust-dx2, -8px), var(--dust-dy2, 10px)); opacity: 0; }
 }
 
 main, header, footer {
@@ -338,4 +392,9 @@ main, header, footer {
     flex-direction: column;
     align-items: flex-start;
   }
+}
+
+/* ---- custom cursor (kept last so it wins over component cursor rules) ---- */
+a, button, .btn, input, [role="button"] {
+  cursor: url("assets/cursor.png") 19 7, pointer;
 }
