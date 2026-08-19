@@ -266,6 +266,14 @@ main, header, footer {
   color: var(--text-dim);
 }
 
+.about-panel {
+  background: rgba(18, 19, 16, 0.82);
+  border: 1px solid var(--copper-dim);
+  border-radius: 6px;
+  padding: 28px 32px;
+  backdrop-filter: blur(2px);
+}
+
 .about-text {
   color: var(--text-dim);
   font-size: 1rem;
