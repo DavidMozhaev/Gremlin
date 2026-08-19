@@ -395,6 +395,122 @@ main, header, footer {
   opacity: 0.6;
 }
 
+/* ---- proof grid ---- */
+.proof-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 18px;
+}
+
+.proof-card {
+  position: relative;
+  display: block;
+  padding: 0;
+  margin: 0;
+  overflow: hidden;
+  border-radius: 6px;
+  border: 1px solid var(--border);
+  background: var(--bg-panel);
+  aspect-ratio: 4 / 3;
+  font-family: inherit;
+}
+
+.proof-card:hover,
+.proof-card:focus-visible {
+  border-color: var(--lime-dim);
+}
+
+.proof-card img {
+  display: block;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  transition: transform 0.35s ease;
+}
+
+.proof-card:hover img,
+.proof-card:focus-visible img {
+  transform: scale(1.045);
+}
+
+.proof-overlay {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  color: var(--lime);
+  background: rgba(10, 11, 9, 0);
+  opacity: 0;
+  transition: opacity 0.25s ease, background 0.25s ease;
+}
+
+.proof-card:hover .proof-overlay,
+.proof-card:focus-visible .proof-overlay {
+  opacity: 1;
+  background: rgba(10, 11, 9, 0.55);
+}
+
+.proof-hint {
+  font-size: 0.75rem;
+  letter-spacing: 0.05em;
+  text-transform: lowercase;
+}
+
+@media (max-width: 640px) {
+  .proof-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+/* ---- lightbox ---- */
+.lightbox {
+  position: fixed;
+  inset: 0;
+  z-index: 50;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 40px;
+  background: rgba(10, 11, 9, 0.88);
+  backdrop-filter: blur(3px);
+}
+
+.lightbox[hidden] {
+  display: none;
+}
+
+.lightbox-img {
+  max-width: 100%;
+  max-height: 100%;
+  border-radius: 6px;
+  border: 1px solid var(--border);
+  box-shadow: 0 0 40px rgba(0, 0, 0, 0.6);
+}
+
+.lightbox-close {
+  position: fixed;
+  top: 20px;
+  right: 24px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 40px;
+  height: 40px;
+  padding: 0;
+  color: var(--text);
+  background: rgba(18, 19, 16, 0.8);
+  border: 1px solid var(--border);
+  border-radius: 50%;
+}
+
+.lightbox-close:hover {
+  color: var(--lime);
+  border-color: var(--lime-dim);
+}
+
 @media (max-width: 520px) {
   .nav-inner {
     flex-direction: column;

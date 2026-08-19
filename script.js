@@ -19,6 +19,42 @@ if (copyBtn && caValue) {
   });
 }
 
+// Proof grid lightbox
+const lightbox = document.getElementById("lightbox");
+const lightboxImg = document.getElementById("lightbox-img");
+const lightboxClose = document.getElementById("lightbox-close");
+const proofCards = document.querySelectorAll(".proof-card");
+
+function openLightbox(src) {
+  lightboxImg.src = src;
+  lightbox.hidden = false;
+  document.body.style.overflow = "hidden";
+}
+
+function closeLightbox() {
+  lightbox.hidden = true;
+  lightboxImg.src = "";
+  document.body.style.overflow = "";
+}
+
+proofCards.forEach((card) => {
+  card.addEventListener("click", () => openLightbox(card.dataset.full));
+});
+
+if (lightboxClose) {
+  lightboxClose.addEventListener("click", closeLightbox);
+}
+
+if (lightbox) {
+  lightbox.addEventListener("click", (e) => {
+    if (e.target === lightbox) closeLightbox();
+  });
+}
+
+document.addEventListener("keydown", (e) => {
+  if (e.key === "Escape" && lightbox && !lightbox.hidden) closeLightbox();
+});
+
 // Buy button — points at placeholder until a real URL is set
 const buyBtn = document.getElementById("buy-btn");
 if (buyBtn) {
